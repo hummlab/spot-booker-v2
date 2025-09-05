@@ -1,6 +1,9 @@
 /// Shared models, utilities, and data structures for Spot Booker applications
 library shared;
 
+// Data Providers
+export 'src/data_providers/data_providers.dart';
+
 // Utils
 export 'src/utils/converters.dart';
 export 'src/utils/refs.dart';
