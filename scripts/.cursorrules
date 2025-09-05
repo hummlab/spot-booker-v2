@@ -1,0 +1,140 @@
+# Cursor Rules for Scripts Directory
+
+## Variable Typing Requirements
+
+### JavaScript/TypeScript Files
+- **ALL variables MUST have explicit type annotations when using TypeScript**
+- **Use TypeScript over JavaScript for all new scripts**
+- **ALL function parameters MUST have explicit type annotations**
+- **ALL function return types MUST be explicitly declared**
+- **Use interfaces for object types and complex data structures**
+
+### Examples of Proper Typing
+
+```typescript
+// ✅ Good - Explicit typing
+const userName: string = "John Doe";
+const userAge: number = 25;
+const userRoles: string[] = ["admin", "user"];
+const userData: { name: string; age: number } = { name: "John", age: 25 };
+
+// ✅ Good - Function with explicit types
+function createUser(name: string, email: string, age: number): Promise<FirebaseFirestore.DocumentReference> {
+  // Implementation
+}
+
+// ✅ Good - Interface definitions
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  age: number;
+  createdAt: Date;
+}
+
+interface FirestoreConfig {
+  projectId: string;
+  keyPath: string;
+  collectionName: string;
+}
+
+// ❌ Bad - Missing type annotations
+let userName = "John Doe";        // Use: const userName: string = "John Doe";
+let userAge = 25;                 // Use: const userAge: number = 25;
+let userRoles = ["admin"];        // Use: const userRoles: string[] = ["admin"];
+
+// ❌ Bad - Function without explicit types
+function createUser(name, email, age) {  // Missing parameter and return types
+  // Implementation
+}
+```
+
+### Firestore Operations
+- **Use explicit types for Firestore document data**
+- **Define interfaces for document structures**
+- **Type all Firestore query results**
+- **Use proper error handling with typed exceptions**
+
+```typescript
+// ✅ Good - Firestore with explicit typing
+interface UserDocument {
+  firstName: string;
+  lastName: string;
+  age: number;
+  email: string;
+  createdAt: FirebaseFirestore.Timestamp;
+}
+
+async function addUser(userData: UserDocument): Promise<string> {
+  try {
+    const docRef: FirebaseFirestore.DocumentReference = await db.collection('users').add(userData);
+    return docRef.id;
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      throw new Error(`Failed to add user: ${error.message}`);
+    }
+    throw new Error('Unknown error occurred');
+  }
+}
+```
+
+### Configuration and Environment
+- **Type all configuration objects**
+- **Use explicit types for environment variables**
+- **Define interfaces for API responses**
+
+```typescript
+// ✅ Good - Configuration typing
+interface DatabaseConfig {
+  projectId: string;
+  keyPath: string;
+  databaseURL: string;
+}
+
+const config: DatabaseConfig = {
+  projectId: process.env.FIREBASE_PROJECT_ID as string,
+  keyPath: './keys/service-account-key.json',
+  databaseURL: process.env.FIREBASE_DATABASE_URL as string,
+};
+```
+
+## Code Quality Requirements
+
+### Error Handling
+- **Always use try-catch blocks for async operations**
+- **Type all error objects**
+- **Provide meaningful error messages**
+- **Log errors with proper context**
+
+### Documentation
+- **All functions must have JSDoc comments with parameter and return type descriptions**
+- **All interfaces must be documented**
+- **Scripts must have header comments explaining their purpose**
+
+### Best Practices
+- **Use const for immutable values**
+- **Use readonly for arrays and objects that shouldn't be modified**
+- **Prefer async/await over promises for readability**
+- **Use proper naming conventions (camelCase for variables and functions)**
+
+## Security Requirements
+
+### Credentials
+- **Never hardcode API keys or sensitive data**
+- **Use environment variables for configuration**
+- **Ensure all credential files are in .gitignore**
+
+### Data Validation
+- **Validate all input data before Firestore operations**
+- **Use type guards for runtime type checking**
+- **Sanitize user input appropriately**
+
+## Performance Guidelines
+
+### Firestore Operations
+- **Use batch operations for multiple writes**
+- **Implement proper pagination for large queries**
+- **Use appropriate indexes for query optimization**
+- **Minimize read operations by structuring data efficiently**
+
+These rules ensure that all scripts maintain high code quality, type safety, and security standards.

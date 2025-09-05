@@ -1,0 +1,118 @@
+# Secrets Management
+- All secrets (API keys, tokens, etc.) must be placed in `lib/secrets.dart`, which is gitignored.
+- Do NOT add secrets directly to the codebase or commit them to the repository.
+- Example: Firebase keys, Mixpanel tokens, and other private configuration values must be stored in `lib/secrets.dart` only.
+
+# Flutter Development Guidelines
+
+## Screen Organization
+- Each screen must be placed in its own separate folder
+- Screen folder structure: `lib/screens/screen_name/screen_name.dart`
+- Include related widgets and components within the screen folder
+- Example structure:
+  ```
+  lib/screens/
+  ├── home/
+  │   ├── home_screen.dart
+  │   ├── widgets/
+  │   │   ├── home_header.dart
+  │   │   └── home_content.dart
+  │   └── home_screen.dart
+  ├── profile/
+  │   ├── profile_screen.dart
+  │   ├── widgets/
+  │   │   ├── profile_avatar.dart
+  │   │   └── profile_info.dart
+  │   └── profile_screen.dart
+  ```
+
+## Widget Separation
+- Extract reusable widgets into separate files
+- Place screen-specific widgets in `widgets/` folder within the screen directory
+- Place global reusable widgets in `lib/widgets/` directory
+- Each widget file should contain only one main widget class
+- Widgets should be focused and have a single responsibility
+
+## File Size Limits
+- No file should contain more than 500 lines of code
+- If a file exceeds 500 lines, extract functions, widgets, or code fragments into separate files
+- Break down large widgets into smaller, more manageable components
+- Extract business logic into separate service or utility classes
+- Use mixins or extensions to share functionality between classes
+
+## State Management with Qubit
+- Qubit is the default state management system for this application
+- Qubit files should be placed in a separate `cubit` folder within the screen directory
+- Each screen folder should contain the screen file and a `cubit` subfolder with Qubit files
+- Repositories are already available in `packages/shared` and should not be duplicated
+- Example structure:
+  ```
+  lib/screens/
+  ├── home/
+  │   ├── home_screen.dart
+  │   ├── cubit/
+  │   │   ├── home_cubit.dart
+  │   │   └── home_state.dart
+  │   └── widgets/
+  │       ├── home_header.dart
+  │       └── home_content.dart
+  ├── profile/
+  │   ├── profile_screen.dart
+  │   ├── cubit/
+  │   │   ├── profile_cubit.dart
+  │   │   └── profile_state.dart
+  │   └── widgets/
+  │       ├── profile_avatar.dart
+  │       └── profile_info.dart
+  ```
+
+## Qubit Implementation Guidelines
+- Separate business logic from UI logic
+- Keep Qubit classes focused on a single feature or domain
+- Use repositories for data access and API calls
+- Implement proper error handling in Qubit classes
+- Use immutable state classes with copyWith methods
+- Example Qubit structure:
+  ```dart
+  // user_state.dart
+  abstract class UserState {
+    const UserState();
+  }
+  
+  class UserInitial extends UserState {}
+  class UserLoading extends UserState {}
+  class UserLoaded extends UserState {
+    final User user;
+    const UserLoaded(this.user);
+  }
+  class UserError extends UserState {
+    final String message;
+    const UserError(this.message);
+  }
+  
+  // user_cubit.dart
+  class UserCubit extends Cubit<UserState> {
+    final UserRepository _repository;
+    
+    UserCubit({required UserRepository repository})
+        : _repository = repository,
+          super(UserInitial());
+    
+    Future<void> loadUser(String id) async {
+      emit(UserLoading());
+      try {
+        final user = await _repository.getUser(id);
+        emit(UserLoaded(user));
+      } catch (e) {
+        emit(UserError(e.toString()));
+      }
+    }
+  }
+  ```
+
+## Code Organization Best Practices
+- Keep related files together in feature-based folders
+- Use consistent naming conventions across the project
+- Implement proper separation of concerns
+- Extract utility functions and constants into separate files
+- Use dependency injection for better testability and maintainability 

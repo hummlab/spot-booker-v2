@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rezerwacja Biurek - Wygodne rezerwowanie miejsc pracy</title>
+    <meta name="description" content="Rezerwuj biurka wygodnie w kilka sekund. Nowoczesna aplikacja do zarządzania miejscami pracy w Twojej firmie.">
+    <meta name="keywords" content="rezerwacja biurek, booking, miejsca pracy, office, zarządzanie">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Rezerwacja Biurek - Wygodne rezerwowanie miejsc pracy">
+    <meta property="og:description" content="Rezerwuj biurka wygodnie w kilka sekund. Nowoczesna aplikacja do zarządzania miejscami pracy.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://example.com">
+    <meta property="og:image" content="https://example.com/assets/img/og-image.jpg">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/assets/img/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png">
+    
+    <!-- Remix Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="assets/css/styles.css">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Rezerwacja Biurek",
+        "description": "Nowoczesna aplikacja do zarządzania miejscami pracy. Zarezerwuj swoje biurko szybko, sprawnie i bez zbędnych formalności.",
+        "url": "https://example.com",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "PLN"
+        },
+        "author": {
+            "@type": "Organization",
+            "name": "TWOJA FIRMA"
+        }
+    }
+    </script>
+</head>
+<body>
+    <!-- Header with Navigation -->
+    <header id="header" class="header">
+        <nav class="nav container">
+            <div class="nav__brand">
+                <a href="#home" class="nav__logo">
+                    <img src="assets/img/logo.svg" alt="Rezerwacja Biurek Logo" width="40" height="40">
+                    <span>Rezerwacja Biurek</span>
+                </a>
+            </div>
+            
+            <div class="nav__menu" id="nav-menu">
+                <ul class="nav__list">
+                    <li class="nav__item">
+                        <a href="#home" class="nav__link">Start</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="#features" class="nav__link">Funkcje</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="#how-it-works" class="nav__link">Jak to działa</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="#faq" class="nav__link">FAQ</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="#contact" class="nav__link">Kontakt</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="#privacy" class="nav__link">Prywatność</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="#terms" class="nav__link">Regulamin</a>
+                    </li>
+                </ul>
+                <div class="nav__close" id="nav-close">
+                    <i class="ri-close-line"></i>
+                </div>
+            </div>
+            
+            <div class="nav__actions">
+                <a href="https://example.com/app" class="btn btn--primary">Przejdź do aplikacji</a>
+                <div class="nav__toggle" id="nav-toggle">
+                    <i class="ri-menu-line"></i>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main">
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="hero__container container">
+                <div class="hero__content">
+                    <h1 class="hero__title">
+                        Rezerwuj biurka wygodnie<br>
+                        <span class="hero__accent">w kilka sekund</span>
+                    </h1>
+                    <p class="hero__description">
+                        Nowoczesna aplikacja do zarządzania miejscami pracy. 
+                        Zarezerwuj swoje biurko szybko, sprawnie i bez zbędnych formalności.
+                    </p>
+                    <div class="hero__actions">
+                        <a href="https://example.com/app" class="btn btn--primary btn--large">
+                            Rozpocznij teraz
+                        </a>
+                        <a href="#how-it-works" class="btn btn--secondary btn--large">
+                            Zobacz jak to działa
+                        </a>
+                    </div>
+                </div>
+                <div class="hero__image">
+                    <img src="assets/img/hero-dashboard.jpg" alt="Dashboard aplikacji Rezerwacja Biurek pokazujący mapę biura z dostępnymi biurkami" loading="lazy" width="600" height="400">
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="features">
+            <div class="features__container container">
+                <div class="section__header">
+                    <h2 class="section__title">Główne funkcje</h2>
+                    <p class="section__description">
+                        Wszystko czego potrzebujesz do zarządzania miejscami pracy w jednej aplikacji
+                    </p>
+                </div>
+                
+                <div class="features__grid">
+                    <div class="feature-card">
+                        <div class="feature-card__icon">
+                            <img src="assets/img/icon-login.svg" alt="Ikona logowania" loading="lazy" width="32" height="32">
+                        </div>
+                        <h3 class="feature-card__title">Bezpieczne logowanie</h3>
+                        <p class="feature-card__description">
+                            Szybkie i bezpieczne logowanie przez firmowy system uwierzytelniania
+                        </p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-card__icon">
+                            <img src="assets/img/icon-booking.svg" alt="Ikona rezerwacji" loading="lazy" width="32" height="32">
+                        </div>
+                        <h3 class="feature-card__title">Łatwe rezerwacje</h3>
+                        <p class="feature-card__description">
+                            Wybierz biurko z interaktywnej mapy i zarezerwuj w kilka kliknięć
+                        </p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-card__icon">
+                            <img src="assets/img/icon-view.svg" alt="Ikona podglądu dostępności" loading="lazy" width="32" height="32">
+                        </div>
+                        <h3 class="feature-card__title">Podgląd dostępności</h3>
+                        <p class="feature-card__description">
+                            Zobacz w czasie rzeczywistym które biurka są wolne, a które zajęte
+                        </p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-card__icon">
+                            <img src="assets/img/icon-admin.svg" alt="Ikona panelu administratora" loading="lazy" width="32" height="32">
+                        </div>
+                        <h3 class="feature-card__title">Panel administratora</h3>
+                        <p class="feature-card__description">
+                            Zarządzaj użytkownikami, biurkami i ustawieniami z jednego miejsca
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How it Works Section -->
+        <section id="how-it-works" class="how-it-works">
+            <div class="how-it-works__container container">
+                <div class="section__header">
+                    <h2 class="section__title">Jak to działa?</h2>
+                    <p class="section__description">
+                        Zarezerwuj swoje biurko w trzech prostych krokach
+                    </p>
+                </div>
+                
+                <div class="steps">
+                    <div class="step">
+                        <div class="step__number">1</div>
+                        <div class="step__content">
+                            <h3 class="step__title">Zaloguj się</h3>
+                            <p class="step__description">
+                                Użyj swoich firmowych danych logowania, aby uzyskać dostęp do aplikacji
+                            </p>
+                        </div>
+                        <div class="step__image">
+                            <img src="assets/img/step-1.jpg" alt="Przykład ekranu logowania do aplikacji" loading="lazy" width="400" height="300">
+                        </div>
+                    </div>
+                    
+                    <div class="step step--reverse">
+                        <div class="step__number">2</div>
+                        <div class="step__content">
+                            <h3 class="step__title">Wybierz biurko</h3>
+                            <p class="step__description">
+                                Przeglądaj mapę biura i wybierz dostępne biurko na wybraną datę
+                            </p>
+                        </div>
+                        <div class="step__image">
+                            <img src="assets/img/step-2.jpg" alt="Przykład ekranu wyboru biurka z mapą biura" loading="lazy" width="400" height="300">
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step__number">3</div>
+                        <div class="step__content">
+                            <h3 class="step__title">Potwierdź rezerwację</h3>
+                            <p class="step__description">
+                                Sprawdź szczegóły i potwierdź rezerwację. Gotowe!
+                            </p>
+                        </div>
+                        <div class="step__image">
+                            <img src="assets/img/step-3.jpg" alt="Przykład ekranu potwierdzenia rezerwacji" loading="lazy" width="400" height="300">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="faq">
+            <div class="faq__container container">
+                <div class="section__header">
+                    <h2 class="section__title">Często zadawane pytania</h2>
+                    <p class="section__description">
+                        Znajdź odpowiedzi na najczęściej zadawane pytania
+                    </p>
+                </div>
+                
+                <div class="faq__list">
+                    <div class="faq__item">
+                        <button class="faq__question" aria-expanded="false">
+                            <span>Jak daleko wcześniej mogę zarezerwować biurko?</span>
+                            <i class="faq__icon ri-add-line"></i>
+                        </button>
+                        <div class="faq__answer">
+                            <p>Możesz rezerwować biurka do 30 dni wcześniej. System automatycznie wyświetla dostępne terminy i pozwala na planowanie pracy z wyprzedzeniem.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq__item">
+                        <button class="faq__question" aria-expanded="false">
+                            <span>Czy mogę anulować lub zmienić rezerwację?</span>
+                            <i class="faq__icon ri-add-line"></i>
+                        </button>
+                        <div class="faq__answer">
+                            <p>Tak, możesz anulować lub modyfikować rezerwację do godziny 8:00 w dniu rezerwacji. Po tym czasie zmiany nie są możliwe ze względów organizacyjnych.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq__item">
+                        <button class="faq__question" aria-expanded="false">
+                            <span>Co jeśli nie ma wolnych biurek?</span>
+                            <i class="faq__icon ri-add-line"></i>
+                        </button>
+                        <div class="faq__answer">
+                            <p>Możesz dołączyć do listy oczekujących. Jeśli ktoś anuluje rezerwację, zostaniesz automatycznie powiadomiony o dostępności.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq__item">
+                        <button class="faq__question" aria-expanded="false">
+                            <span>Czy aplikacja działa na urządzeniach mobilnych?</span>
+                            <i class="faq__icon ri-add-line"></i>
+                        </button>
+                        <div class="faq__answer">
+                            <p>Oczywiście! Aplikacja jest w pełni responsywna i działa na wszystkich urządzeniach - komputerach, tabletach i smartfonach.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq__item">
+                        <button class="faq__question" aria-expanded="false">
+                            <span>Jak są oznaczone biurka specjalne (np. dla niepełnosprawnych)?</span>
+                            <i class="faq__icon ri-add-line"></i>
+                        </button>
+                        <div class="faq__answer">
+                            <p>Wszystkie biurka specjalne są wyraźnie oznaczone ikonami i opisami. Mają priorytet w rezerwacji dla osób, które ich potrzebują.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq__item">
+                        <button class="faq__question" aria-expanded="false">
+                            <span>Kto ma dostęp do panelu administratora?</span>
+                            <i class="faq__icon ri-add-line"></i>
+                        </button>
+                        <div class="faq__answer">
+                            <p>Panel administratora jest dostępny dla wyznaczonych menedżerów i administratorów IT. Pozwala na zarządzanie użytkownikami, biurkami i raportami.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="contact">
+            <div class="contact__container container">
+                <div class="section__header">
+                    <h2 class="section__title">Kontakt</h2>
+                    <p class="section__description">
+                        Masz pytania? Skontaktuj się z nami
+                    </p>
+                </div>
+                
+                <div class="contact__content">
+                    <div class="contact__info">
+                        <h3>Napisz do nas</h3>
+                        <p>Jesteśmy do Twojej dyspozycji w godzinach pracy</p>
+                        <a href="mailto:kontakt@twojadomena.pl" class="contact__email">
+                            kontakt@twojadomena.pl
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Privacy Policy Section -->
+        <section id="privacy" class="privacy">
+            <div class="privacy__container container">
+                <div class="section__header">
+                    <h2 class="section__title">Polityka prywatności</h2>
+                </div>
+                
+                <div class="privacy__content">
+                    <h3>1. Informacje ogólne</h3>
+                    <p>Niniejsza Polityka Prywatności określa zasady przetwarzania danych osobowych użytkowników aplikacji Rezerwacja Biurek.</p>
+                    
+                    <h3>2. Administrator danych</h3>
+                    <p>[Placeholder - nazwa firmy, adres, dane kontaktowe administratora danych]</p>
+                    
+                    <h3>3. Cele przetwarzania danych</h3>
+                    <p>[Placeholder - szczegółowy opis celów przetwarzania danych osobowych w aplikacji]</p>
+                    
+                    <h3>4. Podstawa prawna</h3>
+                    <p>[Placeholder - podstawy prawne przetwarzania zgodnie z RODO]</p>
+                    
+                    <h3>5. Okres przechowywania danych</h3>
+                    <p>[Placeholder - informacje o okresach przechowywania różnych kategorii danych]</p>
+                    
+                    <h3>6. Prawa użytkowników</h3>
+                    <p>[Placeholder - szczegółowy opis praw użytkowników zgodnie z RODO]</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Terms of Service Section -->
+        <section id="terms" class="terms">
+            <div class="terms__container container">
+                <div class="section__header">
+                    <h2 class="section__title">Regulamin</h2>
+                </div>
+                
+                <div class="terms__content">
+                    <h3>1. Postanowienia ogólne</h3>
+                    <p>[Placeholder - definicje, zakres stosowania regulaminu]</p>
+                    
+                    <h3>2. Zasady korzystania z aplikacji</h3>
+                    <p>[Placeholder - szczegółowe zasady rezerwacji biurek, obowiązki użytkowników]</p>
+                    
+                    <h3>3. Rejestracja i konto użytkownika</h3>
+                    <p>[Placeholder - procedury rejestracji, zarządzanie kontem]</p>
+                    
+                    <h3>4. Rezerwacje</h3>
+                    <p>[Placeholder - zasady dokonywania, modyfikowania i anulowania rezerwacji]</p>
+                    
+                    <h3>5. Odpowiedzialność</h3>
+                    <p>[Placeholder - ograniczenia odpowiedzialności, obowiązki stron]</p>
+                    
+                    <h3>6. Postanowienia końcowe</h3>
+                    <p>[Placeholder - zmiany regulaminu, prawo właściwe, rozwiązywanie sporów]</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer__container container">
+            <div class="footer__content">
+                <div class="footer__brand">
+                    <a href="#home" class="footer__logo">
+                        <img src="assets/img/logo.svg" alt="Rezerwacja Biurek Logo" width="32" height="32">
+                        <span>Rezerwacja Biurek</span>
+                    </a>
+                </div>
+                
+                <div class="footer__links">
+                    <a href="#privacy" class="footer__link">Polityka prywatności</a>
+                    <a href="#terms" class="footer__link">Regulamin</a>
+                </div>
+            </div>
+            
+            <div class="footer__bottom">
+                <p>&copy; 2024 TWOJA FIRMA. Wszystkie prawa zastrzeżone.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

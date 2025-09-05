@@ -1,0 +1,278 @@
+# Cursor Rules for Models Directory
+
+## Directory Organization
+- **All models must be organized in subdirectories by domain/entity type**
+- **Each model should have its own subdirectory named after the model**
+- **Use snake_case for directory names**
+
+### Directory Structure
+```
+models/
+├── user/              # User-related models
+│   ├── user.dart
+│   ├── user_profile.dart
+│   ├── user_preferences.dart
+│   └── user.freezed.dart
+├── product/           # Product-related models
+│   ├── product.dart
+│   ├── category.dart
+│   ├── inventory.dart
+│   └── product.freezed.dart
+├── order/             # Order-related models
+│   ├── order.dart
+│   ├── order_item.dart
+│   ├── order_status.dart
+│   └── order.freezed.dart
+└── common/            # Common/shared models
+    ├── api_response.dart
+    ├── pagination.dart
+    ├── error_model.dart
+    └── api_response.freezed.dart
+```
+
+## Freezed Code Generation Requirements
+
+### Required Dependencies
+All models must use Freezed for code generation. Add these dependencies to `pubspec.yaml`:
+
+```yaml
+dependencies:
+  freezed_annotation: ^2.4.1
+  json_annotation: ^4.8.1
+
+dev_dependencies:
+  build_runner: ^2.4.7
+  freezed: ^2.4.6
+  json_serializable: ^6.7.1
+```
+
+### Model Structure with Freezed
+All models must follow this structure:
+
+```dart
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'model_name.freezed.dart';
+part 'model_name.g.dart';
+
+@freezed
+class ModelName with _$ModelName {
+  const factory ModelName({
+    required String id,
+    required String name,
+    required DateTime createdAt,
+    DateTime? updatedAt,
+  }) = _ModelName;
+
+  factory ModelName.fromJson(Map<String, dynamic> json) => _$ModelNameFromJson(json);
+}
+```
+
+### Example Model Implementation
+
+```dart
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'user.freezed.dart';
+part 'user.g.dart';
+
+@freezed
+class User with _$User {
+  const factory User({
+    required String id,
+    required String email,
+    required String name,
+    required UserRole role,
+    required DateTime createdAt,
+    DateTime? updatedAt,
+    @Default(false) bool isActive,
+    @Default([]) List<String> permissions,
+  }) = _User;
+
+  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+}
+
+enum UserRole {
+  @JsonValue('admin')
+  admin,
+  @JsonValue('user')
+  user,
+  @JsonValue('moderator')
+  moderator,
+}
+```
+
+## Development Guidelines
+
+### File Naming
+- Use snake_case for file names
+- Model file should match the class name in snake_case
+- Always include `.freezed.dart` and `.g.dart` parts
+
+### Strong Typing Requirements
+- All properties must have explicit types
+- Use `required` for non-nullable properties
+- Use nullable types (`String?`, `DateTime?`) for optional properties
+- Use `@Default()` for properties with default values
+
+### JSON Serialization
+- Always implement `fromJson` factory constructor
+- Use `@JsonValue()` for enum serialization
+- Use `@JsonKey()` for custom field names or transformations
+
+### Code Generation Commands
+After creating or modifying models, run:
+
+```bash
+# Generate Freezed and JSON serialization code
+flutter packages pub run build_runner build
+
+# Watch for changes and auto-generate
+flutter packages pub run build_runner watch
+
+# Clean and rebuild if needed
+flutter packages pub run build_runner clean
+flutter packages pub run build_runner build --delete-conflicting-outputs
+```
+
+### Model Organization Rules
+
+#### Single Model per File
+- Each model should be in its own file
+- File name should match the model name in snake_case
+- Related models can be in the same subdirectory
+
+#### Subdirectory Naming
+- Use descriptive names that represent the domain
+- Use snake_case for directory names
+- Group related models together
+
+#### Import Organization
+```dart
+// Standard library imports
+import 'dart:convert';
+
+// Third-party imports
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+// Local imports
+import '../common/api_response.dart';
+
+// Generated imports (always last)
+part 'model_name.freezed.dart';
+part 'model_name.g.dart';
+```
+
+### Validation and Business Logic
+- Use Freezed's `@Assert` for validation
+- Implement custom methods using `@With` mixins
+- Use `@Implements` for interface implementation
+
+```dart
+@freezed
+class User with _$User {
+  const User._(); // Private constructor for custom methods
+
+  const factory User({
+    required String id,
+    required String email,
+    required String name,
+    required UserRole role,
+    required DateTime createdAt,
+    DateTime? updatedAt,
+  }) = _User;
+
+  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+
+  // Custom methods
+  bool get isAdmin => role == UserRole.admin;
+  bool get isActive => updatedAt != null;
+  
+  String get displayName => name.isNotEmpty ? name : email.split('@').first;
+}
+```
+
+### Error Handling
+- Use Freezed's union types for error handling
+- Implement proper error models with Freezed
+
+```dart
+@freezed
+class ApiResult<T> with _$ApiResult<T> {
+  const factory ApiResult.success(T data) = Success<T>;
+  const factory ApiResult.error(String message) = Error<T>;
+  const factory ApiResult.loading() = Loading<T>;
+}
+```
+
+### Testing Guidelines
+- Write unit tests for all models
+- Test JSON serialization/deserialization
+- Test custom methods and computed properties
+- Use explicit types in test code
+
+```dart
+void main() {
+  group('User Model', () {
+    test('should create user from JSON', () {
+      final Map<String, dynamic> json = {
+        'id': 'user-123',
+        'email': 'test@example.com',
+        'name': 'Test User',
+        'role': 'admin',
+        'createdAt': '2023-01-01T00:00:00.000Z',
+      };
+
+      final User user = User.fromJson(json);
+
+      expect(user.id, equals('user-123'));
+      expect(user.email, equals('test@example.com'));
+      expect(user.name, equals('Test User'));
+      expect(user.role, equals(UserRole.admin));
+    });
+
+    test('should convert user to JSON', () {
+      const User user = User(
+        id: 'user-123',
+        email: 'test@example.com',
+        name: 'Test User',
+        role: UserRole.admin,
+        createdAt: DateTime(2023, 1, 1),
+      );
+
+      final Map<String, dynamic> json = user.toJson();
+
+      expect(json['id'], equals('user-123'));
+      expect(json['email'], equals('test@example.com'));
+      expect(json['name'], equals('Test User'));
+      expect(json['role'], equals('admin'));
+    });
+
+    test('should return correct computed properties', () {
+      const User adminUser = User(
+        id: 'admin-123',
+        email: 'admin@example.com',
+        name: 'Admin User',
+        role: UserRole.admin,
+        createdAt: DateTime(2023, 1, 1),
+      );
+
+      expect(adminUser.isAdmin, isTrue);
+      expect(adminUser.displayName, equals('Admin User'));
+    });
+  });
+}
+```
+
+## Best Practices
+
+1. **Immutability**: All models should be immutable using Freezed
+2. **Type Safety**: Use explicit types for all properties
+3. **Documentation**: Document all public models and methods
+4. **Validation**: Use `@Assert` for property validation
+5. **Testing**: Write comprehensive unit tests
+6. **Organization**: Keep related models in the same subdirectory
+7. **Naming**: Use descriptive names for models and properties
+8. **Serialization**: Always implement JSON serialization
+9. **Error Handling**: Use union types for error scenarios
+10. **Performance**: Use `const` constructors when possible 

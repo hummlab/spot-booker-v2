@@ -1,0 +1,29 @@
+# Flutter/Dart/Pub related
+.dart_tool/
+.packages
+.pub/
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+.flutter-versions
+.flutter-plugins
+.flutter-plugins-dependencies
+.melos_tool/
+
+# IDEs and editors
+.idea/
+.vscode/
+*.iml
+
+# Generated files
+android/app/debug/
+android/app/profile/
+android/app/release/
+
+# Misc
+*.log
+*.tmp
+*.swp
+
+# Secrets
+lib/secrets.dart 

@@ -1,0 +1,4 @@
+# Secrets Management
+- All secrets (API keys, tokens, etc.) must be placed in `lib/secrets.dart`, which is gitignored.
+- Do NOT add secrets directly to the codebase or commit them to the repository.
+- Example: Firebase keys, Mixpanel tokens, and other private configuration values must be stored in `lib/secrets.dart` only. 

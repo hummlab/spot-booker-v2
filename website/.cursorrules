@@ -1,0 +1,701 @@
+# Cursor Rules for Website Development
+
+## Technology Stack
+- **HTML5**: Semantic markup and modern HTML features
+- **CSS3**: Modern CSS with Flexbox, Grid, and custom properties
+- **JavaScript (ES6+)**: Modern JavaScript with modules and async/await
+- **No Frameworks**: Pure HTML, CSS, and JavaScript approach
+
+## File Organization
+
+### HTML Files
+- `index.html` - Main homepage
+- `privacy-policy.html` - Privacy policy page
+- `terms-of-service.html` - Terms of service page
+
+### CSS Structure
+```
+css/
+├── main.css         # Main stylesheet with global styles
+├── components.css   # Component-specific styles
+├── animations.css   # Animation and transition styles
+└── responsive.css   # Responsive design and media queries
+```
+
+### JavaScript Structure
+```
+js/
+├── main.js          # Main JavaScript file and initialization
+├── navigation.js    # Navigation functionality
+├── animations.js    # Animation and scroll effects
+└── utils.js         # Utility functions and helpers
+```
+
+## HTML Guidelines
+
+### Semantic HTML5
+- Use semantic HTML5 elements: `<header>`, `<nav>`, `<main>`, `<section>`, `<article>`, `<aside>`, `<footer>`
+- Use proper heading hierarchy: `<h1>`, `<h2>`, `<h3>`, etc.
+- Include proper meta tags for SEO and social sharing
+
+### Example HTML Structure
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Title - Project Template</title>
+    <meta name="description" content="Page description for SEO">
+    <meta name="keywords" content="relevant, keywords, here">
+    
+    <!-- Open Graph tags -->
+    <meta property="og:title" content="Page Title">
+    <meta property="og:description" content="Page description">
+    <meta property="og:image" content="path/to/image.jpg">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html">Project Template</a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                <li><a href="terms-of-service.html">Terms of Service</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <section class="hero">
+            <!-- Hero content -->
+        </section>
+        
+        <section class="features">
+            <!-- Features content -->
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Project Template</h4>
+                    <p>Comprehensive mobile development solution</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                        <li><a href="terms-of-service.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/animations.js"></script>
+</body>
+</html>
+```
+
+## CSS Guidelines
+
+### CSS Custom Properties
+Use CSS custom properties for consistent theming:
+
+```css
+:root {
+    /* Colors */
+    --primary-color: #2563eb;
+    --secondary-color: #1e40af;
+    --accent-color: #f59e0b;
+    --text-color: #1f2937;
+    --text-light: #6b7280;
+    --background-color: #ffffff;
+    --background-light: #f8fafc;
+    
+    /* Typography */
+    --font-family-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-family-secondary: 'Georgia', serif;
+    --font-size-base: 16px;
+    --line-height-base: 1.6;
+    
+    /* Spacing */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-2xl: 3rem;
+    
+    /* Border radius */
+    --border-radius-sm: 4px;
+    --border-radius-md: 8px;
+    --border-radius-lg: 12px;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    
+    /* Transitions */
+    --transition-fast: 0.15s ease;
+    --transition-normal: 0.3s ease;
+    --transition-slow: 0.5s ease;
+}
+```
+
+### Component Structure
+Organize CSS by components:
+
+```css
+/* Navigation Component */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: var(--background-color);
+    box-shadow: var(--shadow-sm);
+    z-index: 1000;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-md) var(--spacing-xl);
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: var(--spacing-xl);
+}
+
+.nav-menu a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 500;
+    transition: color var(--transition-normal);
+}
+
+.nav-menu a:hover {
+    color: var(--primary-color);
+}
+
+/* Hero Component */
+.hero {
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--background-color);
+    padding: var(--spacing-2xl) var(--spacing-md);
+}
+
+.hero-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    margin-bottom: var(--spacing-lg);
+    line-height: 1.2;
+}
+
+.hero-subtitle {
+    font-size: clamp(1.125rem, 2vw, 1.5rem);
+    margin-bottom: var(--spacing-2xl);
+    opacity: 0.9;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Button Component */
+.btn {
+    display: inline-block;
+    padding: var(--spacing-md) var(--spacing-xl);
+    border: none;
+    border-radius: var(--border-radius-md);
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    text-align: center;
+}
+
+.btn-primary {
+    background: var(--primary-color);
+    color: var(--background-color);
+}
+
+.btn-primary:hover {
+    background: var(--secondary-color);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+}
+
+.btn-secondary:hover {
+    background: var(--primary-color);
+    color: var(--background-color);
+}
+```
+
+### Responsive Design
+Use mobile-first approach with media queries:
+
+```css
+/* Base styles (mobile first) */
+.container {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xl);
+    padding: var(--spacing-2xl) 0;
+}
+
+/* Tablet styles */
+@media (min-width: 768px) {
+    .container {
+        max-width: 720px;
+        padding: 0 var(--spacing-lg);
+    }
+    
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-2xl);
+    }
+}
+
+/* Desktop styles */
+@media (min-width: 1024px) {
+    .container {
+        max-width: 1200px;
+        padding: 0 var(--spacing-xl);
+    }
+    
+    .features-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Large desktop styles */
+@media (min-width: 1440px) {
+    .container {
+        max-width: 1400px;
+    }
+}
+```
+
+### Animations
+Create smooth animations and transitions:
+
+```css
+/* Animation keyframes */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+/* Animation classes */
+.animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.animate-slide-in-left {
+    animation: slideInLeft 0.6s ease-out;
+}
+
+.animate-pulse {
+    animation: pulse 2s infinite;
+}
+
+/* Scroll animations */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease-out;
+}
+
+.animate-on-scroll.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Hover effects */
+.hover-lift {
+    transition: transform var(--transition-normal);
+}
+
+.hover-lift:hover {
+    transform: translateY(-4px);
+}
+
+.hover-scale {
+    transition: transform var(--transition-normal);
+}
+
+.hover-scale:hover {
+    transform: scale(1.05);
+}
+```
+
+## JavaScript Guidelines
+
+### Modern JavaScript (ES6+)
+Use modern JavaScript features:
+
+```javascript
+// Use const and let instead of var
+const API_URL = 'https://api.example.com';
+let currentPage = 1;
+
+// Use arrow functions
+const fetchData = async (url) => {
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        throw error;
+    }
+};
+
+// Use template literals
+const createElement = (tag, className, text) => {
+    const element = document.createElement(tag);
+    element.className = className;
+    element.textContent = text;
+    return element;
+};
+
+// Use destructuring
+const { title, description, image } = pageData;
+
+// Use spread operator
+const updatedMenu = [...menuItems, newItem];
+
+// Use optional chaining
+const userName = user?.profile?.name || 'Anonymous';
+```
+
+### Module Structure
+Organize JavaScript into modules:
+
+```javascript
+// main.js - Main initialization
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize all modules
+    Navigation.init();
+    Animations.init();
+    Utils.init();
+    
+    // Set up event listeners
+    setupEventListeners();
+});
+
+function setupEventListeners() {
+    // Global event listeners
+    window.addEventListener('scroll', Utils.debounce(Animations.handleScroll, 16));
+    window.addEventListener('resize', Utils.debounce(Utils.handleResize, 250));
+}
+
+// navigation.js - Navigation functionality
+const Navigation = {
+    init() {
+        this.hamburger = document.querySelector('.hamburger');
+        this.navMenu = document.querySelector('.nav-menu');
+        this.navLinks = document.querySelectorAll('.nav-menu a');
+        
+        this.bindEvents();
+    },
+    
+    bindEvents() {
+        this.hamburger?.addEventListener('click', this.toggleMenu.bind(this));
+        this.navLinks.forEach(link => {
+            link.addEventListener('click', this.closeMenu.bind(this));
+        });
+    },
+    
+    toggleMenu() {
+        this.hamburger.classList.toggle('active');
+        this.navMenu.classList.toggle('active');
+        document.body.classList.toggle('menu-open');
+    },
+    
+    closeMenu() {
+        this.hamburger.classList.remove('active');
+        this.navMenu.classList.remove('active');
+        document.body.classList.remove('menu-open');
+    }
+};
+
+// animations.js - Animation and scroll effects
+const Animations = {
+    init() {
+        this.setupIntersectionObserver();
+        this.setupScrollAnimations();
+    },
+    
+    setupIntersectionObserver() {
+        const options = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        this.observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, options);
+        
+        // Observe elements
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            this.observer.observe(el);
+        });
+    },
+    
+    setupScrollAnimations() {
+        // Parallax effects, scroll-triggered animations, etc.
+    },
+    
+    handleScroll() {
+        // Handle scroll events
+        const scrolled = window.pageYOffset;
+        const parallaxElements = document.querySelectorAll('.parallax');
+        
+        parallaxElements.forEach(element => {
+            const speed = element.dataset.speed || 0.5;
+            element.style.transform = `translateY(${scrolled * speed}px)`;
+        });
+    }
+};
+
+// utils.js - Utility functions
+const Utils = {
+    init() {
+        // Initialize utility functions
+    },
+    
+    debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    },
+    
+    throttle(func, limit) {
+        let inThrottle;
+        return function() {
+            const args = arguments;
+            const context = this;
+            if (!inThrottle) {
+                func.apply(context, args);
+                inThrottle = true;
+                setTimeout(() => inThrottle = false, limit);
+            }
+        };
+    },
+    
+    handleResize() {
+        // Handle window resize events
+        const vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+    },
+    
+    smoothScroll(target) {
+        const element = document.querySelector(target);
+        if (element) {
+            element.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    }
+};
+```
+
+## Performance Guidelines
+
+### CSS Performance
+- Use CSS custom properties for theming
+- Minimize CSS specificity conflicts
+- Use efficient selectors
+- Optimize critical CSS path
+- Use CSS containment where appropriate
+
+### JavaScript Performance
+- Use event delegation for dynamic content
+- Debounce scroll and resize events
+- Use Intersection Observer for scroll animations
+- Minimize DOM queries and cache selectors
+- Use requestAnimationFrame for animations
+
+### General Performance
+- Optimize images (WebP format, proper sizing)
+- Minify CSS and JavaScript for production
+- Use lazy loading for images
+- Implement proper caching strategies
+- Monitor Core Web Vitals
+
+## Accessibility Guidelines
+
+### WCAG 2.1 Compliance
+- Use semantic HTML elements
+- Provide proper alt text for images
+- Ensure proper color contrast ratios
+- Implement keyboard navigation
+- Use ARIA labels where needed
+- Test with screen readers
+
+### Example Accessibility Features
+```html
+<!-- Proper heading structure -->
+<h1>Main Page Title</h1>
+<h2>Section Title</h2>
+<h3>Subsection Title</h3>
+
+<!-- Proper alt text -->
+<img src="hero-image.jpg" alt="Team working on mobile app development" />
+
+<!-- ARIA labels -->
+<button aria-label="Toggle navigation menu" class="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+</button>
+
+<!-- Skip links -->
+<a href="#main-content" class="skip-link">Skip to main content</a>
+```
+
+## SEO Guidelines
+
+### Meta Tags
+- Use descriptive page titles
+- Include meta descriptions
+- Add Open Graph tags for social sharing
+- Include Twitter Card meta tags
+- Use structured data (JSON-LD)
+
+### Example SEO Implementation
+```html
+<head>
+    <title>Project Template - Mobile Development Solution</title>
+    <meta name="description" content="Comprehensive Flutter-based mobile development solution with web panels and cloud backend">
+    <meta name="keywords" content="Flutter, mobile development, web panel, Firebase, cloud functions">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Project Template - Mobile Development Solution">
+    <meta property="og:description" content="Comprehensive Flutter-based mobile development solution">
+    <meta property="og:image" content="https://example.com/og-image.jpg">
+    <meta property="og:url" content="https://example.com">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Project Template">
+    <meta name="twitter:description" content="Mobile development solution">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Project Template",
+        "description": "Mobile development solution",
+        "url": "https://example.com"
+    }
+    </script>
+</head>
+```
+
+## Testing Guidelines
+
+### Cross-browser Testing
+- Test on Chrome, Firefox, Safari, Edge
+- Test on mobile browsers (iOS Safari, Chrome Mobile)
+- Use browser dev tools for responsive testing
+- Test with different screen sizes
+
+### Performance Testing
+- Use Lighthouse for performance audits
+- Monitor Core Web Vitals
+- Test loading times on slow connections
+- Optimize based on performance metrics
+
+### Accessibility Testing
+- Use automated accessibility tools
+- Test with keyboard navigation
+- Test with screen readers
+- Validate color contrast ratios 

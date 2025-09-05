@@ -1,0 +1,339 @@
+# Cursor Rules for Flutter Mobile Development Project
+
+## Code Language and Comments
+- **All code must be written in English**
+- **All comments must be written in English**
+- **All documentation must be written in English**
+- **All variable names, function names, and class names must be in English**
+
+## Strong Typing Requirements
+- **All variables must have explicit type annotations**
+- **All function parameters must have explicit type annotations**
+- **All function return types must be explicitly declared**
+- **Use `var` only when the type is obvious from the context**
+- **Prefer explicit types over type inference when it improves readability**
+
+### Examples of Strong Typing
+
+```dart
+// ✅ Good - Explicit typing
+String userName = "John Doe";
+int userAge = 25;
+List<String> userRoles = ["admin", "user"];
+Map<String, dynamic> userData = {"name": "John", "age": 25};
+
+// ✅ Good - Function with explicit types
+String getUserFullName(String firstName, String lastName) {
+  return "$firstName $lastName";
+}
+
+// ✅ Good - Class with explicit types
+class User {
+  final String id;
+  final String email;
+  final List<String> permissions;
+  
+  const User({
+    required this.id,
+    required this.email,
+    required this.permissions,
+  });
+}
+
+// ❌ Bad - Missing type annotations
+var userName = "John Doe";  // Use String instead
+var userAge = 25;          // Use int instead
+var userRoles = ["admin"]; // Use List<String> instead
+
+// ❌ Bad - Function without explicit return type
+getUserFullName(String firstName, String lastName) {  // Missing return type
+  return "$firstName $lastName";
+}
+```
+
+## Flutter Development Guidelines
+
+### Widget Structure
+- Always use explicit types for widget parameters
+- Use `const` constructors when possible
+- Prefer `StatelessWidget` over `StatefulWidget` when state is not needed
+
+```dart
+// ✅ Good - Explicit typing in widgets
+class UserCard extends StatelessWidget {
+  final String userName;
+  final String userEmail;
+  final VoidCallback onTap;
+  
+  const UserCard({
+    Key? key,
+    required this.userName,
+    required this.userEmail,
+    required this.onTap,
+  }) : super(key: key);
+  
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: ListTile(
+        title: Text(userName),
+        subtitle: Text(userEmail),
+        onTap: onTap,
+      ),
+    );
+  }
+}
+```
+
+### State Management
+- Use explicit types for state variables
+- Document state management patterns
+- Use proper state management libraries (Provider, Riverpod, Bloc, etc.)
+
+```dart
+// ✅ Good - Explicit state typing
+class UserState {
+  final bool isLoading;
+  final List<User> users;
+  final String? errorMessage;
+  
+  const UserState({
+    this.isLoading = false,
+    this.users = const [],
+    this.errorMessage,
+  });
+}
+```
+
+## Package Development Guidelines
+
+### Shared Package Structure
+- All models must have explicit type annotations
+- All data providers must have explicit return types
+- All repositories must implement proper interfaces with explicit types
+
+```dart
+// ✅ Good - Repository interface with explicit types
+abstract class UserRepository {
+  Future<User?> getById(String id);
+  Future<List<User>> getAll();
+  Future<User> create(User user);
+  Future<User> update(User user);
+  Future<void> delete(String id);
+}
+
+// ✅ Good - Implementation with explicit types
+class UserRepositoryImpl implements UserRepository {
+  final UserApiProvider _apiProvider;
+  
+  UserRepositoryImpl({required UserApiProvider apiProvider})
+      : _apiProvider = apiProvider;
+  
+  @override
+  Future<User?> getById(String id) async {
+    final ApiResponse<User> response = await _apiProvider.getUserById(id);
+    return response.isSuccess ? response.data : null;
+  }
+}
+```
+
+## Backend Development Guidelines
+
+### Firebase Cloud Functions
+- Use TypeScript with explicit type annotations
+- All function parameters must have explicit types
+- All return types must be explicitly declared
+- Use proper interfaces for request/response objects
+
+```typescript
+// ✅ Good - Explicit typing in Cloud Functions
+interface CreateUserRequest {
+  email: string;
+  name: string;
+  role: string;
+}
+
+interface CreateUserResponse {
+  success: boolean;
+  userId?: string;
+  error?: string;
+}
+
+export const createUser = functions.https.onCall(
+  async (data: CreateUserRequest, context): Promise<CreateUserResponse> => {
+    try {
+      if (!context.auth) {
+        return {
+          success: false,
+          error: 'User must be authenticated',
+        };
+      }
+      
+      const { email, name, role } = data;
+      
+      // Implementation here
+      
+      return {
+        success: true,
+        userId: 'generated-id',
+      };
+    } catch (error) {
+      return {
+        success: false,
+        error: 'Internal server error',
+      };
+    }
+  }
+);
+```
+
+## Documentation Requirements
+
+### Code Documentation
+- All public methods must have documentation comments
+- All public classes must have documentation comments
+- Use proper Dart documentation format
+- Document parameters, return types, and exceptions
+
+```dart
+/// Repository for managing user data operations
+/// 
+/// This repository provides a clean interface for user-related data operations,
+/// including CRUD operations and business logic.
+abstract class UserRepository {
+  /// Retrieves a user by their unique identifier
+  /// 
+  /// [id] - The unique identifier of the user
+  /// Returns [User?] if found, null otherwise
+  /// Throws [RepositoryException] if the operation fails
+  Future<User?> getById(String id);
+}
+```
+
+### README Files
+- All README files must be written in English
+- Include setup instructions
+- Document usage examples
+- Explain the purpose and structure of each directory
+
+## Testing Guidelines
+
+### Unit Tests
+- All public methods must have unit tests
+- Use explicit types in test code
+- Test both success and failure scenarios
+- Use descriptive test names in English
+
+```dart
+// ✅ Good - Explicit typing in tests
+void main() {
+  group('UserRepository', () {
+    late UserRepository userRepository;
+    late MockUserApiProvider mockApiProvider;
+    
+    setUp(() {
+      mockApiProvider = MockUserApiProvider();
+      userRepository = UserRepositoryImpl(apiProvider: mockApiProvider);
+    });
+    
+    test('should return user when API call is successful', () async {
+      // Arrange
+      const String userId = 'test-user-id';
+      const User expectedUser = User(id: userId, email: 'test@example.com');
+      
+      when(mockApiProvider.getUserById(userId))
+          .thenAnswer((_) async => ApiResponse.success(expectedUser));
+      
+      // Act
+      final User? result = await userRepository.getById(userId);
+      
+      // Assert
+      expect(result, equals(expectedUser));
+    });
+  });
+}
+```
+
+## File Organization
+
+### Naming Conventions
+- Use snake_case for file names
+- Use PascalCase for class names
+- Use camelCase for variable and function names
+- Use UPPER_SNAKE_CASE for constants
+
+### Directory Structure
+- Follow the established directory structure
+- Keep related files together
+- Use descriptive directory names
+- Maintain consistency across the project
+
+## Code Quality
+
+### Linting and Formatting
+- Use `flutter analyze` to check for issues
+- Use `dart format` to format code
+- Follow Dart style guide
+- Use proper indentation and spacing
+
+### Error Handling
+- Use explicit error types
+- Implement proper exception handling
+- Log errors appropriately
+- Provide meaningful error messages
+
+## Performance Guidelines
+
+### Optimization
+- Use `const` constructors when possible
+- Avoid unnecessary widget rebuilds
+- Use proper caching strategies
+- Optimize network requests
+
+### Memory Management
+- Dispose of controllers properly
+- Avoid memory leaks
+- Use weak references when appropriate
+- Monitor memory usage
+
+## Security Guidelines
+
+### Data Protection
+- Validate all input data
+- Use secure communication protocols
+- Implement proper authentication
+- Follow security best practices
+
+### Code Security
+- Don't hardcode sensitive information
+- Use environment variables for configuration
+- Implement proper access controls
+- Follow OWASP guidelines
+
+## Version Control
+
+### Commit Messages
+- Write commit messages in English
+- Use descriptive commit messages
+- Follow conventional commit format
+- Reference issues when applicable
+
+### Branch Naming
+- Use descriptive branch names
+- Follow consistent naming conventions
+- Use feature/ prefix for new features
+- Use fix/ prefix for bug fixes
+
+## Continuous Integration
+
+### Build Requirements
+- All code must compile without errors
+- All tests must pass
+- Code coverage should be maintained
+- Follow CI/CD best practices
+
+### Quality Gates
+- Code review required for all changes
+- Automated testing must pass
+- Code formatting must be consistent
+- Documentation must be up to date 
