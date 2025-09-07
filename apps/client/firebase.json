@@ -1,17 +1,1 @@
-{
-  "hosting": {
-    "site": "spot-booker-client-v2",
-    "public": "build/web",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
-    "rewrites": [
-      {
-        "source": "**",
-        "destination": "/index.html"
-      }
-    ]
-  }
-}
+{"hosting":{"site":"spot-booker-client-v2","public":"build/web","ignore":["firebase.json","**/.*","**/node_modules/**"],"rewrites":[{"source":"**","destination":"/index.html"}]},"flutter":{"platforms":{"android":{"default":{"projectId":"spot-booker-v2","appId":"1:1074093755166:android:b069acd0f584a4568b170f","fileOutput":"android/app/google-services.json"}},"ios":{"default":{"projectId":"spot-booker-v2","appId":"1:1074093755166:ios:6b0c0578a20f93e88b170f","uploadDebugSymbols":false,"fileOutput":"ios/Runner/GoogleService-Info.plist"}},"dart":{"lib/firebase_options.dart":{"projectId":"spot-booker-v2","configurations":{"android":"1:1074093755166:android:b069acd0f584a4568b170f","ios":"1:1074093755166:ios:6b0c0578a20f93e88b170f","web":"1:1074093755166:web:66a49c79c0b6b3318b170f"}}}}}}

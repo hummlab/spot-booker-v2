@@ -48,7 +48,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyBWiVpEKjf5uxE76z78y_ch-Y_qXoixi8Q',
-    appId: '1:1074093755166:web:c8a49c79c0b6b3318b170f',
+    appId: '1:1074093755166:web:66a49c79c0b6b3318b170f',
     messagingSenderId: '1074093755166',
     projectId: 'spot-booker-v2',
     authDomain: 'spot-booker-v2.firebaseapp.com',
@@ -56,21 +56,20 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBWiVpEKjf5uxE76z78y_ch-Y_qXoixi8Q',
-    appId: '1:1074093755166:android:a1b49c79c0b6b3318b170f',
+    apiKey: 'AIzaSyAsYew502zf8sU-L03dLLILfk5TEGDZ-Io',
+    appId: '1:1074093755166:android:b069acd0f584a4568b170f',
     messagingSenderId: '1074093755166',
     projectId: 'spot-booker-v2',
-    authDomain: 'spot-booker-v2.firebaseapp.com',
     storageBucket: 'spot-booker-v2.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBWiVpEKjf5uxE76z78y_ch-Y_qXoixi8Q',
-    appId: '1:1074093755166:ios:b2c49c79c0b6b3318b170f',
+    apiKey: 'AIzaSyAuqW2uU-KPJ7cSBWl3JIIRZ0hIHZPcJAA',
+    appId: '1:1074093755166:ios:6b0c0578a20f93e88b170f',
     messagingSenderId: '1074093755166',
     projectId: 'spot-booker-v2',
-    authDomain: 'spot-booker-v2.firebaseapp.com',
     storageBucket: 'spot-booker-v2.firebasestorage.app',
-    iosBundleId: 'com.example.clientApp',
+    iosBundleId: 'com.projecttemplate.clientApp',
   );
+
 }
