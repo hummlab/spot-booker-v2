@@ -1,0 +1,85 @@
+<svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="400" height="300" fill="#f8fafc"/>
+  
+  <!-- Header -->
+  <rect x="0" y="0" width="400" height="40" fill="#1e293b"/>
+  <text x="15" y="25" font-family="Arial, sans-serif" font-size="14" fill="white" font-weight="bold">Wybierz biurko</text>
+  <text x="350" y="25" font-family="Arial, sans-serif" font-size="12" fill="#94a3b8">2024-01-15</text>
+  
+  <!-- Date selector -->
+  <rect x="15" y="50" width="370" height="30" fill="white" stroke="#e2e8f0" stroke-width="1" rx="6"/>
+  <text x="25" y="70" font-family="Arial, sans-serif" font-size="12" fill="#64748b">Data: 15 stycznia 2024 (poniedziałek)</text>
+  <rect x="340" y="55" width="35" height="20" fill="#3b82f6" rx="4"/>
+  <text x="352" y="68" font-family="Arial, sans-serif" font-size="10" fill="white">📅</text>
+  
+  <!-- Office map -->
+  <rect x="15" y="90" width="370" height="170" fill="white" stroke="#e2e8f0" stroke-width="2" rx="8"/>
+  <text x="25" y="110" font-family="Arial, sans-serif" font-size="14" fill="#1e293b" font-weight="bold">Piętro 1 - Dział IT</text>
+  
+  <!-- Desk grid -->
+  <g transform="translate(25, 120)">
+    <!-- Row 1 -->
+    <rect x="20" y="10" width="30" height="25" fill="#10b981" stroke="#059669" stroke-width="2" rx="3"/>
+    <text x="32" y="25" font-family="Arial, sans-serif" font-size="8" fill="white" text-anchor="middle">1A</text>
+    
+    <rect x="60" y="10" width="30" height="25" fill="#ef4444" stroke="#dc2626" stroke-width="2" rx="3"/>
+    <text x="72" y="25" font-family="Arial, sans-serif" font-size="8" fill="white" text-anchor="middle">1B</text>
+    
+    <rect x="100" y="10" width="30" height="25" fill="#10b981" stroke="#059669" stroke-width="2" rx="3"/>
+    <text x="112" y="25" font-family="Arial, sans-serif" font-size="8" fill="white" text-anchor="middle">1C</text>
+    
+    <!-- Selected desk with highlight -->
+    <rect x="140" y="10" width="30" height="25" fill="#3b82f6" stroke="#2563eb" stroke-width="3" rx="3"/>
+    <text x="152" y="25" font-family="Arial, sans-serif" font-size="8" fill="white" text-anchor="middle">1D</text>
+    <circle cx="155" cy="0" r="4" fill="#fbbf24"/>
+    <text x="155" y="3" font-family="Arial, sans-serif" font-size="8" fill="white" text-anchor="middle">!</text>
+    
+    <!-- Row 2 -->
+    <rect x="20" y="50" width="30" height="25" fill="#10b981" stroke="#059669" stroke-width="2" rx="3"/>
+    <text x="32" y="65" font-family="Arial, sans-serif" font-size="8" fill="white" text-anchor="middle">2A</text>
+    
+    <rect x="60" y="50" width="30" height="25" fill="#10b981" stroke="#059669" stroke-width="2" rx="3"/>
+    <text x="72" y="65" font-family="Arial, sans-serif" font-size="8" fill="white" text-anchor="middle">2B</text>
+    
+    <rect x="100" y="50" width="30" height="25" fill="#ef4444" stroke="#dc2626" stroke-width="2" rx="3"/>
+    <text x="112" y="65" font-family="Arial, sans-serif" font-size="8" fill="white" text-anchor="middle">2C</text>
+    
+    <rect x="140" y="50" width="30" height="25" fill="#10b981" stroke="#059669" stroke-width="2" rx="3"/>
+    <text x="152" y="65" font-family="Arial, sans-serif" font-size="8" fill="white" text-anchor="middle">2D</text>
+    
+    <!-- Row 3 -->
+    <rect x="20" y="90" width="30" height="25" fill="#ef4444" stroke="#dc2626" stroke-width="2" rx="3"/>
+    <text x="32" y="105" font-family="Arial, sans-serif" font-size="8" fill="white" text-anchor="middle">3A</text>
+    
+    <rect x="60" y="90" width="30" height="25" fill="#10b981" stroke="#059669" stroke-width="2" rx="3"/>
+    <text x="72" y="105" font-family="Arial, sans-serif" font-size="8" fill="white" text-anchor="middle">3B</text>
+    
+    <rect x="100" y="90" width="30" height="25" fill="#10b981" stroke="#059669" stroke-width="2" rx="3"/>
+    <text x="112" y="105" font-family="Arial, sans-serif" font-size="8" fill="white" text-anchor="middle">3C</text>
+    
+    <rect x="140" y="90" width="30" height="25" fill="#10b981" stroke="#059669" stroke-width="2" rx="3"/>
+    <text x="152" y="105" font-family="Arial, sans-serif" font-size="8" fill="white" text-anchor="middle">3D</text>
+  </g>
+  
+  <!-- Desk info panel -->
+  <g transform="translate(220, 120)">
+    <rect x="0" y="0" width="140" height="120" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1" rx="6"/>
+    <text x="8" y="18" font-family="Arial, sans-serif" font-size="12" fill="#1e293b" font-weight="bold">Biurko 1D</text>
+    
+    <text x="8" y="35" font-family="Arial, sans-serif" font-size="10" fill="#64748b">Lokalizacja: Piętro 1</text>
+    <text x="8" y="48" font-family="Arial, sans-serif" font-size="10" fill="#64748b">Sektor: IT</text>
+    <text x="8" y="61" font-family="Arial, sans-serif" font-size="10" fill="#64748b">Wyposażenie:</text>
+    <text x="8" y="74" font-family="Arial, sans-serif" font-size="9" fill="#64748b">• Monitor 24"</text>
+    <text x="8" y="85" font-family="Arial, sans-serif" font-size="9" fill="#64748b">• Klawiatura + mysz</text>
+    <text x="8" y="96" font-family="Arial, sans-serif" font-size="9" fill="#64748b">• Regulowana wysokość</text>
+    
+    <!-- Reserve button -->
+    <rect x="8" y="105" width="124" height="12" fill="#3b82f6" rx="3"/>
+    <text x="70" y="113" font-family="Arial, sans-serif" font-size="9" fill="white" text-anchor="middle" font-weight="bold">Zarezerwuj</text>
+  </g>
+  
+  <!-- Bottom toolbar -->
+  <rect x="0" y="270" width="400" height="30" fill="#e2e8f0"/>
+  <text x="15" y="288" font-family="Arial, sans-serif" font-size="11" fill="#475569">Dostępne: 7 | Zajęte: 3 | Wybrane: Biurko 1D</text>
+</svg>

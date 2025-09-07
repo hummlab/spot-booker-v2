@@ -1,0 +1,73 @@
+<svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="400" height="300" fill="#f8fafc"/>
+  
+  <!-- Header -->
+  <rect x="0" y="0" width="400" height="40" fill="#1e293b"/>
+  <text x="15" y="25" font-family="Arial, sans-serif" font-size="14" fill="white" font-weight="bold">Potwierdzenie rezerwacji</text>
+  <circle cx="360" cy="20" r="12" fill="#10b981"/>
+  <text x="360" y="25" font-family="Arial, sans-serif" font-size="10" fill="white" text-anchor="middle">✓</text>
+  
+  <!-- Success message -->
+  <rect x="30" y="60" width="340" height="50" fill="#dcfce7" stroke="#16a34a" stroke-width="2" rx="8"/>
+  <circle cx="50" cy="85" r="8" fill="#16a34a"/>
+  <text x="50" y="89" font-family="Arial, sans-serif" font-size="10" fill="white" text-anchor="middle">✓</text>
+  <text x="70" y="80" font-family="Arial, sans-serif" font-size="14" fill="#15803d" font-weight="bold">Rezerwacja potwierdzona!</text>
+  <text x="70" y="95" font-family="Arial, sans-serif" font-size="11" fill="#166534">Twoje biurko zostało zarezerwowane na wybrany termin</text>
+  
+  <!-- Reservation details -->
+  <rect x="30" y="130" width="340" height="120" fill="white" stroke="#e2e8f0" stroke-width="2" rx="8"/>
+  <text x="45" y="150" font-family="Arial, sans-serif" font-size="14" fill="#1e293b" font-weight="bold">Szczegóły rezerwacji</text>
+  
+  <!-- Details grid -->
+  <g transform="translate(45, 165)">
+    <text x="0" y="15" font-family="Arial, sans-serif" font-size="12" fill="#64748b" font-weight="bold">Biurko:</text>
+    <text x="200" y="15" font-family="Arial, sans-serif" font-size="12" fill="#1e293b">1D (Piętro 1, Dział IT)</text>
+    
+    <text x="0" y="32" font-family="Arial, sans-serif" font-size="12" fill="#64748b" font-weight="bold">Data:</text>
+    <text x="200" y="32" font-family="Arial, sans-serif" font-size="12" fill="#1e293b">15 stycznia 2024 (poniedziałek)</text>
+    
+    <text x="0" y="49" font-family="Arial, sans-serif" font-size="12" fill="#64748b" font-weight="bold">Godziny:</text>
+    <text x="200" y="49" font-family="Arial, sans-serif" font-size="12" fill="#1e293b">08:00 - 17:00</text>
+    
+    <text x="0" y="66" font-family="Arial, sans-serif" font-size="12" fill="#64748b" font-weight="bold">Użytkownik:</text>
+    <text x="200" y="66" font-family="Arial, sans-serif" font-size="12" fill="#1e293b">Jan Kowalski</text>
+    
+    <text x="0" y="83" font-family="Arial, sans-serif" font-size="12" fill="#64748b" font-weight="bold">ID rezerwacji:</text>
+    <text x="200" y="83" font-family="Arial, sans-serif" font-size="12" fill="#1e293b">#RES-2024-0115-001</text>
+  </g>
+  
+  <!-- Action buttons -->
+  <g transform="translate(30, 270)">
+    <!-- View calendar button -->
+    <rect x="0" y="0" width="110" height="25" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1" rx="6"/>
+    <text x="55" y="16" font-family="Arial, sans-serif" font-size="11" fill="#475569" text-anchor="middle">📅 Kalendarz</text>
+    
+    <!-- Add to calendar button -->
+    <rect x="120" y="0" width="110" height="25" fill="#3b82f6" rx="6"/>
+    <text x="175" y="16" font-family="Arial, sans-serif" font-size="11" fill="white" text-anchor="middle">+ Dodaj do kalendarza</text>
+    
+    <!-- Done button -->
+    <rect x="240" y="0" width="100" height="25" fill="#10b981" rx="6"/>
+    <text x="290" y="16" font-family="Arial, sans-serif" font-size="11" fill="white" text-anchor="middle" font-weight="bold">Gotowe</text>
+  </g>
+  
+  <!-- QR Code placeholder -->
+  <g transform="translate(320, 140)">
+    <rect x="0" y="0" width="40" height="40" fill="white" stroke="#e2e8f0" stroke-width="1" rx="4"/>
+    <rect x="5" y="5" width="30" height="30" fill="black"/>
+    <rect x="7" y="7" width="26" height="26" fill="white"/>
+    <rect x="10" y="10" width="4" height="4" fill="black"/>
+    <rect x="16" y="10" width="4" height="4" fill="black"/>
+    <rect x="22" y="10" width="4" height="4" fill="black"/>
+    <rect x="28" y="10" width="4" height="4" fill="black"/>
+    <rect x="10" y="16" width="4" height="4" fill="black"/>
+    <rect x="22" y="16" width="4" height="4" fill="black"/>
+    <rect x="10" y="22" width="4" height="4" fill="black"/>
+    <rect x="16" y="22" width="4" height="4" fill="black"/>
+    <rect x="28" y="22" width="4" height="4" fill="black"/>
+    <rect x="10" y="28" width="4" height="4" fill="black"/>
+    <rect x="22" y="28" width="4" height="4" fill="black"/>
+    <text x="20" y="50" font-family="Arial, sans-serif" font-size="8" fill="#64748b" text-anchor="middle">QR kod</text>
+  </g>
+</svg>
