@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:shared/shared.dart';
+import 'dart:developer' as developer;
 
 import '../../core/providers.dart';
 import '../../core/router.dart';
@@ -89,10 +90,16 @@ class _ReservationConfirmationScreenState extends ConsumerState<ReservationConfi
   Future<void> _confirmReservation() async {
     if (_desk == null) return;
 
+    developer.log('🎯 Starting reservation confirmation', name: 'ReservationConfirmationScreen');
+
     final AsyncValue<AppUser?> currentUserAsync = ref.read(currentUserProvider);
+    developer.log('📋 CurrentUser async state: ${currentUserAsync.toString()}', name: 'ReservationConfirmationScreen');
+    
     final AppUser? currentUser = currentUserAsync.valueOrNull;
+    developer.log('👤 Current user: ${currentUser != null ? '${currentUser.email} (${currentUser.uid})' : 'null'}', name: 'ReservationConfirmationScreen');
     
     if (currentUser == null) {
+      developer.log('❌ Current user is null, showing error message', name: 'ReservationConfirmationScreen');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: const Text('User not found. Please sign in again.'),
@@ -111,6 +118,7 @@ class _ReservationConfirmationScreenState extends ConsumerState<ReservationConfi
     });
 
     try {
+      developer.log('📝 Creating reservation with userId: ${currentUser.uid}, deskId: ${widget.deskId}, date: ${widget.date}', name: 'ReservationConfirmationScreen');
       final reservationsProvider = ref.read(reservationsDataProvider);
       await reservationsProvider.createReservation(
         userId: currentUser.uid,
@@ -118,6 +126,7 @@ class _ReservationConfirmationScreenState extends ConsumerState<ReservationConfi
         date: widget.date,
         notes: notes,
       );
+      developer.log('✅ Reservation created successfully', name: 'ReservationConfirmationScreen');
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -133,6 +142,7 @@ class _ReservationConfirmationScreenState extends ConsumerState<ReservationConfi
         context.go(AppRoutes.home);
       }
     } catch (e) {
+      developer.log('💥 Error creating reservation: ${e.toString()}', name: 'ReservationConfirmationScreen');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

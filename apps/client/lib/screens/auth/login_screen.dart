@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'dart:developer' as developer;
 
 import '../../core/providers.dart';
 import '../../core/router.dart';
@@ -33,14 +34,41 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     final String password = formData['password'] as String;
 
     try {
+      developer.log('🔐 Attempting login for email: $email', name: 'LoginScreen');
+      
       final authService = ref.read(authServiceProvider);
       await authService.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
       
+      developer.log('✅ Firebase Auth login successful, checking user status', name: 'LoginScreen');
+      
+      // Check if user is approved and active in the system
+      final bool isApproved = await authService.isUserApprovedAndActive();
+      developer.log('📋 User approval status: $isApproved', name: 'LoginScreen');
+      
       if (mounted) {
-        context.go(AppRoutes.home);
+        if (isApproved) {
+          developer.log('🏠 Navigating to home - user is approved', name: 'LoginScreen');
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: const Text('Welcome back!'),
+              backgroundColor: Theme.of(context).colorScheme.primary,
+            ),
+          );
+          context.go(AppRoutes.home);
+        } else {
+          developer.log('⏳ Navigating to pending approval - user not approved yet', name: 'LoginScreen');
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: const Text('Logged in successfully! Please contact administrator to be added to the system.'),
+              backgroundColor: Theme.of(context).colorScheme.secondary,
+              duration: const Duration(seconds: 3),
+            ),
+          );
+          context.go(AppRoutes.pendingApproval);
+        }
       }
     } catch (e) {
       if (mounted) {

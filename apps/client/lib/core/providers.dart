@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared/shared.dart';
+import 'dart:developer' as developer;
 
 import '../services/auth_service.dart';
 
@@ -54,10 +55,19 @@ final currentUserProvider = StreamProvider<AppUser?>((StreamProviderRef<AppUser?
   return authState.when(
     data: (User? firebaseUser) {
       if (firebaseUser == null) {
+        developer.log('❌ No Firebase user in currentUserProvider', name: 'currentUserProvider');
         return Stream.value(null);
       }
       
-      return Stream.fromFuture(usersProvider.getUser(firebaseUser.uid));
+      // Use email instead of UID to find user in Firestore
+      final String email = firebaseUser.email ?? '';
+      if (email.isEmpty) {
+        developer.log('❌ Firebase user has no email in currentUserProvider', name: 'currentUserProvider');
+        return Stream.value(null);
+      }
+      
+      developer.log('🔍 Getting current user by email: $email (Firebase UID: ${firebaseUser.uid})', name: 'currentUserProvider');
+      return Stream.fromFuture(usersProvider.getUserByEmail(email));
     },
     loading: () => Stream.value(null),
     error: (Object error, StackTrace stackTrace) => Stream.value(null),

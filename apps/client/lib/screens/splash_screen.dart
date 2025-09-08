@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'dart:developer' as developer;
 
 import '../core/providers.dart';
 import '../core/router.dart';
@@ -26,17 +27,44 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     
     if (!mounted) return;
 
+    developer.log('🔍 Checking auth state in splash screen', name: 'SplashScreen');
+
     final authState = ref.read(authStateProvider);
     
     authState.when(
-      data: (user) {
+      data: (user) async {
         if (user != null) {
-          context.go(AppRoutes.home);
+          developer.log('👤 User is authenticated, checking system status', name: 'SplashScreen');
+          
+          try {
+            // Check if user is approved and active in the system
+            final authService = ref.read(authServiceProvider);
+            final bool isApproved = await authService.isUserApprovedAndActive();
+            
+            developer.log('✅ User approval status: $isApproved', name: 'SplashScreen');
+            
+            if (mounted) {
+              if (isApproved) {
+                developer.log('🏠 Navigating to home - user is approved', name: 'SplashScreen');
+                context.go(AppRoutes.home);
+              } else {
+                developer.log('⏳ Navigating to pending approval - user not approved yet', name: 'SplashScreen');
+                context.go(AppRoutes.pendingApproval);
+              }
+            }
+          } catch (e) {
+            developer.log('💥 Error checking user status: ${e.toString()}', name: 'SplashScreen');
+            if (mounted) {
+              context.go(AppRoutes.pendingApproval);
+            }
+          }
         } else {
+          developer.log('🚪 No authenticated user, navigating to login', name: 'SplashScreen');
           context.go(AppRoutes.login);
         }
       },
       loading: () {
+        developer.log('⏳ Auth state still loading, retrying...', name: 'SplashScreen');
         // Wait for auth state to load
         Future<void>.delayed(const Duration(milliseconds: 500), () {
           if (mounted) {
@@ -45,6 +73,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
         });
       },
       error: (error, stackTrace) {
+        developer.log('💥 Auth state error: ${error.toString()}', name: 'SplashScreen');
         context.go(AppRoutes.login);
       },
     );

@@ -69,6 +69,11 @@ class UsersRepository {
     return _dataProvider.deleteUser(userId);
   }
 
+  /// Permanently delete a user from Firestore
+  Future<void> permanentlyDeleteUser(String userId) async {
+    return _dataProvider.permanentlyDeleteUser(userId);
+  }
+
   /// Get users count for pagination/statistics
   Future<int> getUsersCount() async {
     return _dataProvider.getUsersCount();

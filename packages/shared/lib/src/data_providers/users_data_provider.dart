@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:developer' as developer;
 
 import '../models/app_user.dart';
 import '../utils/refs.dart';
@@ -32,13 +33,42 @@ class UsersDataProvider {
   /// Get a single user by ID
   Future<AppUser?> getUser(String userId) async {
     try {
+      developer.log('👤 Getting user by UID: $userId', name: 'UsersDataProvider.getUser');
+      developer.log('👤 Document path: users/$userId', name: 'UsersDataProvider.getUser');
+      
       final DocumentSnapshot<Map<String, dynamic>> doc = 
           await FirestoreRefs.userDocRef(userId).get();
       
-      if (!doc.exists) return null;
+      developer.log('👤 Document exists: ${doc.exists}', name: 'UsersDataProvider.getUser');
+      developer.log('👤 Document ID: ${doc.id}', name: 'UsersDataProvider.getUser');
       
-      return AppUser.fromJson(doc.data()!);
+      if (!doc.exists) {
+        developer.log('👤 User document not found for UID: $userId', name: 'UsersDataProvider.getUser');
+        
+        // Let's also try to find user by email to debug
+        developer.log('🔍 Searching for user in all documents to debug...', name: 'UsersDataProvider.getUser');
+        try {
+          final QuerySnapshot<Map<String, dynamic>> allUsers = await FirestoreRefs.usersRef.get();
+          developer.log('📋 Found ${allUsers.docs.length} total user documents', name: 'UsersDataProvider.getUser');
+          for (final doc in allUsers.docs) {
+            developer.log('📄 Document ID: ${doc.id}, Data: ${doc.data()}', name: 'UsersDataProvider.getUser');
+          }
+        } catch (debugError) {
+          developer.log('💥 Error in debug search: $debugError', name: 'UsersDataProvider.getUser');
+        }
+        
+        return null;
+      }
+      
+      final Map<String, dynamic>? data = doc.data();
+      developer.log('👤 Document data: ${data.toString()}', name: 'UsersDataProvider.getUser');
+      
+      final AppUser user = AppUser.fromJson(data!);
+      developer.log('👤 Successfully parsed user: ${user.email} (active: ${user.active}, uid: ${user.uid})', name: 'UsersDataProvider.getUser');
+      
+      return user;
     } catch (e) {
+      developer.log('💥 Error getting user by UID: ${e.toString()}', name: 'UsersDataProvider.getUser');
       rethrow;
     }
   }
@@ -121,6 +151,15 @@ class UsersDataProvider {
     }
   }
 
+  /// Permanently delete a user from Firestore
+  Future<void> permanentlyDeleteUser(String userId) async {
+    try {
+      await FirestoreRefs.userDocRef(userId).delete();
+    } catch (e) {
+      throw Exception('Failed to permanently delete user: $e');
+    }
+  }
+
   /// Get users count
   Future<int> getUsersCount() async {
     try {
@@ -149,15 +188,55 @@ class UsersDataProvider {
   /// Check if user exists by email
   Future<bool> userExistsByEmail(String email) async {
     try {
+      developer.log('🔍 Checking if user exists by email: ${email.trim().toLowerCase()}', name: 'UsersDataProvider.userExistsByEmail');
+      
       final QuerySnapshot<Map<String, dynamic>> snapshot = 
           await FirestoreRefs.usersRef
               .where('email', isEqualTo: email.trim().toLowerCase())
               .limit(1)
               .get();
       
-      return snapshot.docs.isNotEmpty;
+      final bool exists = snapshot.docs.isNotEmpty;
+      developer.log('🔍 User exists result: $exists (found ${snapshot.docs.length} documents)', name: 'UsersDataProvider.userExistsByEmail');
+      
+      if (exists) {
+        final Map<String, dynamic> userData = snapshot.docs.first.data();
+        developer.log('📋 Found user data: ${userData.toString()}', name: 'UsersDataProvider.userExistsByEmail');
+      }
+      
+      return exists;
     } catch (e) {
+      developer.log('💥 Error checking user existence: ${e.toString()}', name: 'UsersDataProvider.userExistsByEmail');
       return false;
+    }
+  }
+
+  /// Get user by email address
+  Future<AppUser?> getUserByEmail(String email) async {
+    try {
+      developer.log('📧 Getting user by email: ${email.trim().toLowerCase()}', name: 'UsersDataProvider.getUserByEmail');
+      
+      final QuerySnapshot<Map<String, dynamic>> snapshot = 
+          await FirestoreRefs.usersRef
+              .where('email', isEqualTo: email.trim().toLowerCase())
+              .limit(1)
+              .get();
+      
+      if (snapshot.docs.isEmpty) {
+        developer.log('❌ No user found with email: ${email.trim().toLowerCase()}', name: 'UsersDataProvider.getUserByEmail');
+        return null;
+      }
+
+      final Map<String, dynamic> userData = snapshot.docs.first.data();
+      developer.log('📋 Found user document: ${userData.toString()}', name: 'UsersDataProvider.getUserByEmail');
+      
+      final AppUser user = AppUser.fromJson(userData);
+      developer.log('✅ Successfully parsed user: ${user.email} (UID: ${user.uid}, active: ${user.active})', name: 'UsersDataProvider.getUserByEmail');
+      
+      return user;
+    } catch (e) {
+      developer.log('💥 Error getting user by email: ${e.toString()}', name: 'UsersDataProvider.getUserByEmail');
+      return null;
     }
   }
 

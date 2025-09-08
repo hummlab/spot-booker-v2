@@ -76,6 +76,45 @@ class UsersPage extends HookConsumerWidget {
       }
     }
 
+    Future<void> handleDeleteUser(AppUser user) async {
+      final bool confirmed = await ConfirmDialog.showAction(
+        context: context,
+        action: 'permanently delete',
+        itemName: 'user ${user.fullName}',
+        customMessage: 'This action cannot be undone. The user ${user.fullName} and all associated data will be permanently removed from the system.',
+        isDestructive: true,
+      );
+
+      if (confirmed) {
+        try {
+          await repository.permanentlyDeleteUser(user.uid);
+          
+          if (context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('User ${user.fullName} deleted successfully'),
+                backgroundColor: Colors.green,
+              ),
+            );
+            
+            // Refresh providers after deletion
+            ref.invalidate(usersStreamProvider);
+            ref.invalidate(usersCountProvider);
+            ref.invalidate(activeUsersCountProvider);
+          }
+        } catch (e) {
+          if (context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Failed to delete user: $e'),
+                backgroundColor: Theme.of(context).colorScheme.error,
+              ),
+            );
+          }
+        }
+      }
+    }
+
     return Scaffold(
       body: Column(
         children: <Widget>[
@@ -122,6 +161,7 @@ class UsersPage extends HookConsumerWidget {
               data: (List<AppUser> users) => _UsersTable(
                 users: users,
                 onToggleStatus: handleToggleUserStatus,
+                onDeleteUser: handleDeleteUser,
               ),
             ),
           ),
@@ -136,10 +176,12 @@ class _UsersTable extends StatelessWidget {
   const _UsersTable({
     required this.users,
     required this.onToggleStatus,
+    required this.onDeleteUser,
   });
 
   final List<AppUser> users;
   final void Function(AppUser user) onToggleStatus;
+  final void Function(AppUser user) onDeleteUser;
 
   @override
   Widget build(BuildContext context) {
@@ -286,7 +328,7 @@ class _UsersTable extends StatelessWidget {
 
               // Actions
               DataCell(
-                Row(
+                  Row(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     // Toggle status button
@@ -299,6 +341,16 @@ class _UsersTable extends StatelessWidget {
                       onPressed: () => onToggleStatus(user),
                     ),
                     
+                    // Delete button
+                    IconButton(
+                      icon: const Icon(
+                        Icons.delete_forever,
+                        color: Colors.red,
+                      ),
+                      tooltip: 'Delete user permanently',
+                      onPressed: () => onDeleteUser(user),
+                    ),
+                    
                     // More actions menu
                     PopupMenuButton<String>(
                       icon: const Icon(Icons.more_vert),
@@ -307,6 +359,9 @@ class _UsersTable extends StatelessWidget {
                         switch (action) {
                           case 'toggle_status':
                             onToggleStatus(user);
+                            break;
+                          case 'delete':
+                            onDeleteUser(user);
                             break;
                           case 'view_details':
                             // TODO: Implement user details view
@@ -335,6 +390,21 @@ class _UsersTable extends StatelessWidget {
                           child: ListTile(
                             leading: Icon(Icons.info_outline),
                             title: Text('View Details'),
+                            dense: true,
+                          ),
+                        ),
+                        const PopupMenuDivider(),
+                        const PopupMenuItem<String>(
+                          value: 'delete',
+                          child: ListTile(
+                            leading: Icon(
+                              Icons.delete_forever,
+                              color: Colors.red,
+                            ),
+                            title: Text(
+                              'Delete User',
+                              style: TextStyle(color: Colors.red),
+                            ),
                             dense: true,
                           ),
                         ),

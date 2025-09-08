@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../screens/auth/login_screen.dart';
 import '../screens/auth/register_screen.dart';
 import '../screens/auth/forgot_password_screen.dart';
+import '../screens/auth/pending_approval_screen.dart';
 import '../screens/home/home_screen.dart';
 import '../screens/desks/desk_list_screen.dart';
 import '../screens/reservations/reservation_confirmation_screen.dart';
@@ -19,6 +20,7 @@ class AppRoutes {
   static const String login = '/login';
   static const String register = '/register';
   static const String forgotPassword = '/forgot-password';
+  static const String pendingApproval = '/pending-approval';
   static const String home = '/home';
   static const String deskList = '/desks';
   static const String reservationConfirmation = '/reservation-confirmation';
@@ -35,16 +37,19 @@ final routerProvider = Provider<GoRouter>((ProviderRef<GoRouter> ref) {
       final bool isLoggedIn = authState.valueOrNull != null;
       final bool isLoggingIn = state.matchedLocation == AppRoutes.login ||
                                state.matchedLocation == AppRoutes.register ||
-                               state.matchedLocation == AppRoutes.forgotPassword;
+                               state.matchedLocation == AppRoutes.forgotPassword ||
+                               state.matchedLocation == AppRoutes.pendingApproval;
 
       // If not logged in and not on auth screens, redirect to login
       if (!isLoggedIn && !isLoggingIn && state.matchedLocation != AppRoutes.splash) {
         return AppRoutes.login;
       }
 
-      // If logged in and on auth screens, redirect to home
-      if (isLoggedIn && isLoggingIn) {
-        return AppRoutes.home;
+      // If logged in and on login/register/forgot password screens, let splash screen handle routing
+      if (isLoggedIn && (state.matchedLocation == AppRoutes.login ||
+                         state.matchedLocation == AppRoutes.register ||
+                         state.matchedLocation == AppRoutes.forgotPassword)) {
+        return AppRoutes.splash;
       }
 
       return null; // No redirect needed
@@ -76,6 +81,13 @@ final routerProvider = Provider<GoRouter>((ProviderRef<GoRouter> ref) {
         name: 'forgot-password',
         builder: (BuildContext context, GoRouterState state) {
           return const ForgotPasswordScreen();
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.pendingApproval,
+        name: 'pending-approval',
+        builder: (BuildContext context, GoRouterState state) {
+          return const PendingApprovalScreen();
         },
       ),
       GoRoute(

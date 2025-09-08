@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'dart:developer' as developer;
 
 import '../../core/providers.dart';
 import '../../core/router.dart';
@@ -20,10 +21,14 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   bool _isLoading = false;
 
   Future<void> _handleRegister() async {
+    developer.log('🎯 Register button pressed', name: 'RegisterScreen');
+    
     if (!_formKey.currentState!.saveAndValidate()) {
+      developer.log('❌ Form validation failed', name: 'RegisterScreen');
       return;
     }
 
+    developer.log('✅ Form validation passed', name: 'RegisterScreen');
     setState(() {
       _isLoading = true;
     });
@@ -32,23 +37,32 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
     final String email = formData['email'] as String;
     final String password = formData['password'] as String;
 
+    developer.log('📧 Attempting registration for email: $email', name: 'RegisterScreen');
+
     try {
       final authService = ref.read(authServiceProvider);
+      developer.log('🔧 AuthService obtained from provider', name: 'RegisterScreen');
+      
       await authService.registerWithEmailAndPassword(
         email: email,
         password: password,
       );
       
+      developer.log('🎉 Registration successful!', name: 'RegisterScreen');
+      
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: const Text('Account created successfully!'),
+            content: const Text('Account created successfully! Contact administrator to be added to the system.'),
             backgroundColor: Theme.of(context).colorScheme.primary,
+            duration: const Duration(seconds: 4),
           ),
         );
+        developer.log('🏠 Navigating to home screen', name: 'RegisterScreen');
         context.go(AppRoutes.home);
       }
     } catch (e) {
+      developer.log('💥 Registration failed with error: ${e.toString()}', name: 'RegisterScreen');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -56,12 +70,14 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
+        developer.log('📱 Error message shown to user: ${e.toString()}', name: 'RegisterScreen');
       }
     } finally {
       if (mounted) {
         setState(() {
           _isLoading = false;
         });
+        developer.log('⏹️ Loading state reset', name: 'RegisterScreen');
       }
     }
   }
@@ -101,7 +117,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Your account must be added by an administrator first',
+                    'After registration, an administrator needs to add you to the system',
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                       color: colorScheme.onSurface.withOpacity(0.6),
                     ),
@@ -118,7 +134,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                             labelText: 'Email Address',
                             prefixIcon: Icon(Icons.email_outlined),
                             border: OutlineInputBorder(),
-                            helperText: 'Use the email address provided by your administrator',
+                            helperText: 'Enter your email address',
                           ),
                           keyboardType: TextInputType.emailAddress,
                           textInputAction: TextInputAction.next,

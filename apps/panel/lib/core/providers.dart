@@ -2,6 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:shared/shared.dart';
+
+import '../features/desks/desks_repository.dart';
+import '../features/users/users_repository.dart';
 
 /// Firebase Auth instance provider
 final firebaseAuthProvider = Provider<FirebaseAuth>((ProviderRef<FirebaseAuth> ref) {
@@ -51,3 +55,74 @@ final pageSizeProvider = Provider<int>((ProviderRef<int> ref) => 20);
 
 /// Current page provider for pagination
 final currentPageProvider = StateProvider<int>((StateProviderRef<int> ref) => 0);
+
+// =============================================================================
+// DESK PROVIDERS
+// =============================================================================
+
+/// Desks stream provider with optional search
+final desksStreamProvider = StreamProvider.family<List<Desk>, String?>((StreamProviderRef<List<Desk>> ref, String? searchQuery) {
+  final DesksRepository repository = ref.watch(desksRepositoryProvider);
+  return repository.getDesks(searchQuery: searchQuery);
+});
+
+/// Desks count provider
+final desksCountProvider = FutureProvider<int>((FutureProviderRef<int> ref) {
+  final DesksRepository repository = ref.watch(desksRepositoryProvider);
+  return repository.getDesksCount();
+});
+
+/// Enabled desks count provider
+final enabledDesksCountProvider = FutureProvider<int>((FutureProviderRef<int> ref) {
+  final DesksRepository repository = ref.watch(desksRepositoryProvider);
+  return repository.getEnabledDesksCount();
+});
+
+/// Available desks for date provider
+final availableDesksProvider = FutureProvider.family<List<Desk>, String>((FutureProviderRef<List<Desk>> ref, String date) {
+  final DesksRepository repository = ref.watch(desksRepositoryProvider);
+  return repository.getAvailableDesks(date);
+});
+
+// =============================================================================
+// RESERVATION PROVIDERS
+// =============================================================================
+
+/// Reservations stream provider with optional filters
+final reservationsStreamProvider = StreamProvider.family<List<Reservation>, ReservationFilters?>((StreamProviderRef<List<Reservation>> ref, ReservationFilters? filters) {
+  // TODO: Implement reservations repository
+  return Stream.value(<Reservation>[]);
+});
+
+/// Reservations count provider
+final reservationsCountProvider = FutureProvider<int>((FutureProviderRef<int> ref) {
+  // TODO: Implement reservations repository
+  return Future.value(0);
+});
+
+/// Active reservations count provider
+final activeReservationsCountProvider = FutureProvider<int>((FutureProviderRef<int> ref) {
+  // TODO: Implement reservations repository
+  return Future.value(0);
+});
+
+// =============================================================================
+// HELPER CLASSES
+// =============================================================================
+
+/// Filters for reservations
+class ReservationFilters {
+  const ReservationFilters({
+    this.searchQuery,
+    this.date,
+    this.status,
+    this.userId,
+    this.deskId,
+  });
+
+  final String? searchQuery;
+  final String? date;
+  final ReservationStatus? status;
+  final String? userId;
+  final String? deskId;
+}
