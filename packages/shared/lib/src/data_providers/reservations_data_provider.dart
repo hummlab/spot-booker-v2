@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:developer' as developer;
 
 import '../models/reservation.dart';
 import '../models/locks/desk_day_lock.dart';
@@ -292,7 +293,12 @@ class ReservationsDataProvider {
   /// Get upcoming reservations for a user
   Future<List<Reservation>> getUserUpcomingReservations(String userId) async {
     try {
+      developer.log('📋 Getting upcoming reservations for userId: $userId', name: 'ReservationsDataProvider.getUserUpcomingReservations');
+      print('📋 Getting upcoming reservations for userId: $userId');
+      
       final String today = getTodayYmd();
+      developer.log('📅 Today date: $today', name: 'ReservationsDataProvider.getUserUpcomingReservations');
+      print('📅 Today date: $today');
       
       final QuerySnapshot<Map<String, dynamic>> snapshot = 
           await FirestoreRefs.reservationsRef
@@ -302,6 +308,9 @@ class ReservationsDataProvider {
               .orderBy('date', descending: false)
               .get();
 
+      developer.log('✅ Successfully retrieved ${snapshot.docs.length} upcoming reservations', name: 'ReservationsDataProvider.getUserUpcomingReservations');
+      print('✅ Successfully retrieved ${snapshot.docs.length} upcoming reservations');
+
       return snapshot.docs
           .map((QueryDocumentSnapshot<Map<String, dynamic>> doc) {
             try {
@@ -313,6 +322,37 @@ class ReservationsDataProvider {
           .whereType<Reservation>()
           .toList();
     } catch (e) {
+      // Use both developer.log and print to ensure visibility
+      developer.log('💥 FIRESTORE INDEX ERROR in getUserUpcomingReservations:', name: 'ReservationsDataProvider.getUserUpcomingReservations');
+      print('💥 FIRESTORE INDEX ERROR in getUserUpcomingReservations:');
+      
+      developer.log('🔗 ERROR DETAILS: ${e.toString()}', name: 'ReservationsDataProvider.getUserUpcomingReservations');
+      print('🔗 ERROR DETAILS: ${e.toString()}');
+      
+      developer.log('📋 Query details:', name: 'ReservationsDataProvider.getUserUpcomingReservations');
+      print('📋 Query details:');
+      
+      developer.log('   - Collection: reservations', name: 'ReservationsDataProvider.getUserUpcomingReservations');
+      print('   - Collection: reservations');
+      
+      developer.log('   - where("userId", "==", "$userId")', name: 'ReservationsDataProvider.getUserUpcomingReservations');
+      print('   - where("userId", "==", "$userId")');
+      
+      developer.log('   - where("status", "==", "active")', name: 'ReservationsDataProvider.getUserUpcomingReservations');
+      print('   - where("status", "==", "active")');
+      
+      developer.log('   - where("date", ">=", "${getTodayYmd()}")', name: 'ReservationsDataProvider.getUserUpcomingReservations');
+      print('   - where("date", ">=", "${getTodayYmd()}")');
+      
+      developer.log('   - orderBy("date", descending: false)', name: 'ReservationsDataProvider.getUserUpcomingReservations');
+      print('   - orderBy("date", descending: false)');
+      
+      developer.log('🔧 COPY THIS ERROR TO CREATE INDEX:', name: 'ReservationsDataProvider.getUserUpcomingReservations');
+      print('🔧 COPY THIS ERROR TO CREATE INDEX:');
+      
+      developer.log(e.toString(), name: 'ReservationsDataProvider.getUserUpcomingReservations');
+      print(e.toString());
+      
       throw Exception('Failed to get upcoming reservations: $e');
     }
   }
@@ -320,7 +360,12 @@ class ReservationsDataProvider {
   /// Get reservation history for a user
   Future<List<Reservation>> getUserReservationHistory(String userId) async {
     try {
+      developer.log('📋 Getting reservation history for userId: $userId', name: 'ReservationsDataProvider.getUserReservationHistory');
+      print('📋 Getting reservation history for userId: $userId');
+      
       final String today = getTodayYmd();
+      developer.log('📅 Today date: $today', name: 'ReservationsDataProvider.getUserReservationHistory');
+      print('📅 Today date: $today');
       
       final QuerySnapshot<Map<String, dynamic>> snapshot = 
           await FirestoreRefs.reservationsRef
@@ -329,6 +374,9 @@ class ReservationsDataProvider {
               .orderBy('date', descending: true)
               .get();
 
+      developer.log('✅ Successfully retrieved ${snapshot.docs.length} history reservations', name: 'ReservationsDataProvider.getUserReservationHistory');
+      print('✅ Successfully retrieved ${snapshot.docs.length} history reservations');
+
       return snapshot.docs
           .map((QueryDocumentSnapshot<Map<String, dynamic>> doc) {
             try {
@@ -340,6 +388,34 @@ class ReservationsDataProvider {
           .whereType<Reservation>()
           .toList();
     } catch (e) {
+      // Use both developer.log and print to ensure visibility
+      developer.log('💥 FIRESTORE INDEX ERROR in getUserReservationHistory:', name: 'ReservationsDataProvider.getUserReservationHistory');
+      print('💥 FIRESTORE INDEX ERROR in getUserReservationHistory:');
+      
+      developer.log('🔗 ERROR DETAILS: ${e.toString()}', name: 'ReservationsDataProvider.getUserReservationHistory');
+      print('🔗 ERROR DETAILS: ${e.toString()}');
+      
+      developer.log('📋 Query details:', name: 'ReservationsDataProvider.getUserReservationHistory');
+      print('📋 Query details:');
+      
+      developer.log('   - Collection: reservations', name: 'ReservationsDataProvider.getUserReservationHistory');
+      print('   - Collection: reservations');
+      
+      developer.log('   - where("userId", "==", "$userId")', name: 'ReservationsDataProvider.getUserReservationHistory');
+      print('   - where("userId", "==", "$userId")');
+      
+      developer.log('   - where("date", "<", "${getTodayYmd()}")', name: 'ReservationsDataProvider.getUserReservationHistory');
+      print('   - where("date", "<", "${getTodayYmd()}")');
+      
+      developer.log('   - orderBy("date", descending: true)', name: 'ReservationsDataProvider.getUserReservationHistory');
+      print('   - orderBy("date", descending: true)');
+      
+      developer.log('🔧 COPY THIS ERROR TO CREATE INDEX:', name: 'ReservationsDataProvider.getUserReservationHistory');
+      print('🔧 COPY THIS ERROR TO CREATE INDEX:');
+      
+      developer.log(e.toString(), name: 'ReservationsDataProvider.getUserReservationHistory');
+      print(e.toString());
+      
       throw Exception('Failed to get reservation history: $e');
     }
   }

@@ -2,8 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared/shared.dart';
 
-import '../../core/providers.dart';
-
 /// Repository for managing desks
 class DesksRepository {
   const DesksRepository({
@@ -14,7 +12,7 @@ class DesksRepository {
 
   /// Get all desks with optional search filtering
   Stream<List<Desk>> getDesks({String? searchQuery}) {
-    Query<Map<String, dynamic>> query = FirestoreRefs.desksRef;
+    Query<Map<String, dynamic>> query = _firestore.collection('desks');
     
     return query
         .orderBy('createdAt', descending: true)
@@ -50,7 +48,7 @@ class DesksRepository {
   Future<Desk?> getDesk(String deskId) async {
     try {
       final DocumentSnapshot<Map<String, dynamic>> doc = 
-          await FirestoreRefs.deskDocRef(deskId).get();
+          await _firestore.collection('desks').doc(deskId).get();
       
       if (!doc.exists) return null;
       
@@ -237,9 +235,7 @@ class DesksRepository {
 
 /// Provider for DesksRepository
 final desksRepositoryProvider = Provider<DesksRepository>((ProviderRef<DesksRepository> ref) {
-  final FirebaseFirestore firestore = ref.watch(firestoreProvider);
-  
-  return DesksRepository(firestore: firestore);
+  return DesksRepository(firestore: FirebaseFirestore.instance);
 });
 
 /// Provider for desks stream with search

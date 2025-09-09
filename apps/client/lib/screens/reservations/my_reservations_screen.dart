@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared/shared.dart';
+import 'dart:developer' as developer;
 
 import '../../core/providers.dart';
 import '../../core/router.dart';
@@ -273,6 +274,9 @@ class _MyReservationsScreenState extends ConsumerState<MyReservationsScreen> wit
   }
 
   Widget _buildUpcomingTab(String userId) {
+    developer.log('🏗️ Building upcoming tab for userId: $userId', name: 'MyReservationsScreen._buildUpcomingTab');
+    print('🏗️ Building upcoming tab for userId: $userId');
+    
     return FutureBuilder<List<Reservation>>(
       future: ref.read(reservationsDataProvider).getUserUpcomingReservations(userId),
       builder: (BuildContext context, AsyncSnapshot<List<Reservation>> snapshot) {
@@ -290,6 +294,18 @@ class _MyReservationsScreenState extends ConsumerState<MyReservationsScreen> wit
         }
 
         if (snapshot.hasError) {
+          developer.log('💥 ERROR in _buildUpcomingTab:', name: 'MyReservationsScreen');
+          print('💥 ERROR in _buildUpcomingTab:');
+          
+          developer.log('🔗 FULL ERROR DETAILS: ${snapshot.error.toString()}', name: 'MyReservationsScreen');
+          print('🔗 FULL ERROR DETAILS: ${snapshot.error.toString()}');
+          
+          developer.log('📋 This is likely a Firestore index error for upcoming reservations', name: 'MyReservationsScreen');
+          print('📋 This is likely a Firestore index error for upcoming reservations');
+          
+          developer.log('🔧 COPY THE ERROR ABOVE TO CREATE THE FIRESTORE INDEX', name: 'MyReservationsScreen');
+          print('🔧 COPY THE ERROR ABOVE TO CREATE THE FIRESTORE INDEX');
+          
           return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -306,7 +322,7 @@ class _MyReservationsScreenState extends ConsumerState<MyReservationsScreen> wit
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  snapshot.error.toString(),
+                  'Check console for Firestore index error details',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
                   ),
@@ -373,6 +389,9 @@ class _MyReservationsScreenState extends ConsumerState<MyReservationsScreen> wit
   }
 
   Widget _buildHistoryTab(String userId) {
+    developer.log('🏗️ Building history tab for userId: $userId', name: 'MyReservationsScreen._buildHistoryTab');
+    print('🏗️ Building history tab for userId: $userId');
+    
     return FutureBuilder<List<Reservation>>(
       future: ref.read(reservationsDataProvider).getUserReservationHistory(userId),
       builder: (BuildContext context, AsyncSnapshot<List<Reservation>> snapshot) {
@@ -390,6 +409,18 @@ class _MyReservationsScreenState extends ConsumerState<MyReservationsScreen> wit
         }
 
         if (snapshot.hasError) {
+          developer.log('💥 ERROR in _buildHistoryTab:', name: 'MyReservationsScreen');
+          print('💥 ERROR in _buildHistoryTab:');
+          
+          developer.log('🔗 FULL ERROR DETAILS: ${snapshot.error.toString()}', name: 'MyReservationsScreen');
+          print('🔗 FULL ERROR DETAILS: ${snapshot.error.toString()}');
+          
+          developer.log('📋 This is likely a Firestore index error for reservation history', name: 'MyReservationsScreen');
+          print('📋 This is likely a Firestore index error for reservation history');
+          
+          developer.log('🔧 COPY THE ERROR ABOVE TO CREATE THE FIRESTORE INDEX', name: 'MyReservationsScreen');
+          print('🔧 COPY THE ERROR ABOVE TO CREATE THE FIRESTORE INDEX');
+          
           return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -406,7 +437,7 @@ class _MyReservationsScreenState extends ConsumerState<MyReservationsScreen> wit
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  snapshot.error.toString(),
+                  'Check console for Firestore index error details',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
                   ),
